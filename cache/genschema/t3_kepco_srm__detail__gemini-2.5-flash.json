@@ -1,0 +1,72 @@
+{
+  "css_schema": {
+    "name": "Korean Public Procurement Notice Detail",
+    "baseSelector": "div.x-panel-table",
+    "fields": [
+      {
+        "name": "title",
+        "selector": null,
+        "type": "text"
+      },
+      {
+        "name": "author",
+        "selector": null,
+        "type": "text"
+      },
+      {
+        "name": "dept",
+        "selector": null,
+        "type": "text"
+      },
+      {
+        "name": "category",
+        "selector": "div.x-form-checkboxgroup div.x-form-cb-checked label.x-form-cb-label-after",
+        "type": "text"
+      },
+      {
+        "name": "posted_at",
+        "selector": null,
+        "type": "text"
+      },
+      {
+        "name": "period_start",
+        "selector": null,
+        "type": "text"
+      },
+      {
+        "name": "period_end",
+        "selector": null,
+        "type": "text"
+      },
+      {
+        "name": "views",
+        "selector": null,
+        "type": "text"
+      },
+      {
+        "name": "attachments",
+        "selector": "div#etnagriduploader-1479 div.x-grid-item-container table.x-grid-item div.x-grid-cell-inner",
+        "type": "list"
+      },
+      {
+        "name": "body",
+        "selector": "label:has(span.x-form-item-label-inner:contains(\"내용\")) + div.x-form-item-body textarea",
+        "type": "text"
+      }
+    ]
+  },
+  "meta": {
+    "model": "gemini-2.5-flash",
+    "target_id": "t3_kepco_srm",
+    "task": "detail",
+    "gen_case": "ntc-4267",
+    "gen_html_bytes": 339537,
+    "gen_wall_ms": 129178.7,
+    "tool_reported_usage": {
+      "prompt": 204839,
+      "completion": 25715,
+      "total": 230554
+    },
+    "generated_at": "2026-09-09 15:50:53"
+  }
+}

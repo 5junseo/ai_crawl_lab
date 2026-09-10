@@ -1,0 +1,81 @@
+{
+  "css_schema": {
+    "name": "Korean Public Procurement Notice Detail",
+    "baseSelector": "#mf_wfm_container_subCtt",
+    "fields": [
+      {
+        "name": "title",
+        "selector": "div#mf_wfm_container_tbxPstNm",
+        "type": "text"
+      },
+      {
+        "name": "author",
+        "selector": "div.non-existent-author-field",
+        "type": "text"
+      },
+      {
+        "name": "dept",
+        "selector": "#mf_wfm_container_icaOdn1Col_input",
+        "type": "attribute",
+        "attribute": "value"
+      },
+      {
+        "name": "category",
+        "selector": "#mf_wfm_container_sbxBbsClsfPritm option:checked",
+        "type": "text"
+      },
+      {
+        "name": "posted_at",
+        "selector": "div.non-existent-posted-at-field",
+        "type": "text"
+      },
+      {
+        "name": "period_start",
+        "selector": "#wq_uuid_2030_ibxStrDay",
+        "type": "attribute",
+        "attribute": "value"
+      },
+      {
+        "name": "period_end",
+        "selector": "#wq_uuid_2030_calEnd_currentDate",
+        "type": "text"
+      },
+      {
+        "name": "views",
+        "selector": "div.non-existent-views-field",
+        "type": "text"
+      },
+      {
+        "name": "attachments",
+        "type": "list",
+        "selector": "#wq_uuid_2091_grdFile_body_tbody tr",
+        "fields": [
+          {
+            "name": "file_name",
+            "selector": "td:nth-child(5)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "body",
+        "selector": "#mf_wfm_container_tbxPstCn",
+        "type": "text"
+      }
+    ]
+  },
+  "meta": {
+    "model": "gemini-2.5-flash",
+    "target_id": "t2_g2b",
+    "task": "detail",
+    "gen_case": "ntc-777",
+    "gen_html_bytes": 1257612,
+    "gen_wall_ms": 91455.5,
+    "tool_reported_usage": {
+      "prompt": 216515,
+      "completion": 17857,
+      "total": 234372
+    },
+    "generated_at": "2026-09-09 15:46:54"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "css_schema": {
+    "name": "Korean Public Procurement Notice Detail",
+    "baseSelector": "div.post",
+    "fields": [
+      {
+        "name": "title",
+        "selector": "div.tbl_data table tbody tr:first-child th",
+        "type": "text"
+      },
+      {
+        "name": "author",
+        "selector": "div.tbl_data table tbody tr:nth-child(2) td:first-of-type",
+        "type": "text"
+      },
+      {
+        "name": "dept",
+        "selector": "div.tbl_data table tbody tr:nth-child(2) td:last-of-type",
+        "type": "text"
+      },
+      {
+        "name": "category",
+        "selector": "div.tbl_data table tbody tr:nth-child(3) td:first-of-type",
+        "type": "text"
+      },
+      {
+        "name": "period_start",
+        "selector": "div.tbl_data table tbody tr:nth-child(3) td:last-of-type",
+        "type": "regex",
+        "pattern": "(\\d{4}-\\d{2}-\\d{2})"
+      },
+      {
+        "name": "period_end",
+        "selector": "div.tbl_data table tbody tr:nth-child(3) td:last-of-type",
+        "type": "regex",
+        "pattern": "\\d{4}-\\d{2}-\\d{2}\\s*~\\s*(\\d{4}-\\d{2}-\\d{2})"
+      },
+      {
+        "name": "body",
+        "selector": "td#contentHtml",
+        "type": "text"
+      },
+      {
+        "name": "attachments",
+        "selector": "div.tbl_data table tbody tr:nth-child(5) td",
+        "type": "list",
+        "fields": [
+          {
+            "name": "name",
+            "selector": "a.tover",
+            "type": "text"
+          }
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "model": "gemini-2.5-flash",
+    "target_id": "t1_d2b",
+    "task": "detail",
+    "gen_case": "NEWS01-6071",
+    "gen_html_bytes": 65200,
+    "gen_wall_ms": 62989.8,
+    "tool_reported_usage": {
+      "prompt": 54801,
+      "completion": 10900,
+      "total": 65701
+    },
+    "generated_at": "2026-09-09 15:42:44"
+  }
+}

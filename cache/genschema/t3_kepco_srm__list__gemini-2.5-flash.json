@@ -1,0 +1,77 @@
+{
+  "css_schema": {
+    "name": "Notice List",
+    "baseSelector": "div.x-grid-item-container > table.x-grid-item > tbody > tr.x-grid-row",
+    "fields": [
+      {
+        "name": "seq",
+        "selector": "td[data-columnid='gridcolumn-1201'] .x-grid-cell-inner",
+        "type": "text"
+      },
+      {
+        "name": "title",
+        "selector": "td[data-columnid='gridcolumn-1202'] .x-grid-cell-inner",
+        "type": "text"
+      },
+      {
+        "name": "has_attachment",
+        "selector": "td[data-columnid='etnaattachmentcolumn-1203'] .grid-attachment-text",
+        "type": "text"
+      },
+      {
+        "name": "business_type",
+        "selector": "td[data-columnid='etnastorecolumn-1204'] .x-grid-cell-inner",
+        "type": "text"
+      },
+      {
+        "name": "announcement_start_date",
+        "selector": "td[data-columnid='datecolumn-1205'] .x-grid-cell-inner",
+        "type": "text"
+      },
+      {
+        "name": "announcement_end_date",
+        "selector": "td[data-columnid='datecolumn-1206'] .x-grid-cell-inner",
+        "type": "text"
+      },
+      {
+        "name": "joint_user_company",
+        "selector": "td[data-columnid='gridcolumn-1207'] .x-grid-cell-inner",
+        "type": "text"
+      },
+      {
+        "name": "item_classification",
+        "selector": "td[data-columnid='etnastorecolumn-1208'] .x-grid-cell-inner",
+        "type": "text"
+      },
+      {
+        "name": "author",
+        "selector": "td[data-columnid='gridcolumn-1209'] .x-grid-cell-inner",
+        "type": "text"
+      },
+      {
+        "name": "posted_at",
+        "selector": "td[data-columnid='datecolumn-1210'] .x-grid-cell-inner",
+        "type": "text"
+      },
+      {
+        "name": "views",
+        "selector": "td[data-columnid='non-existent-views-column'] .x-grid-cell-inner",
+        "type": "text"
+      }
+    ]
+  },
+  "meta": {
+    "model": "gemini-2.5-flash",
+    "target_id": "t3_kepco_srm",
+    "task": "list",
+    "gen_case": "ntc-p1",
+    "gen_html_bytes": 273271,
+    "gen_wall_ms": 94959.6,
+    "tool_reported_usage": {
+      "prompt": 169538,
+      "completion": 17547,
+      "total": 187085
+    },
+    "generated_at": "2026-09-09 15:52:30"
+  }
+}

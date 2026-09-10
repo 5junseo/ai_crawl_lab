@@ -1,0 +1,53 @@
+{
+  "css_schema": {
+    "name": "Public Procurement Notices",
+    "baseSelector": "div.tbl_list.taC table tbody tr",
+    "fields": [
+      {
+        "name": "seq",
+        "selector": "td:nth-child(1)",
+        "type": "text"
+      },
+      {
+        "name": "title",
+        "selector": "td:nth-child(2) a",
+        "type": "text"
+      },
+      {
+        "name": "has_attachment",
+        "selector": "td:nth-child(3) .ico_file",
+        "type": "attribute",
+        "attribute": "class"
+      },
+      {
+        "name": "author",
+        "selector": "td:nth-child(4)",
+        "type": "text"
+      },
+      {
+        "name": "posted_at",
+        "selector": "td:nth-child(5)",
+        "type": "text"
+      },
+      {
+        "name": "views",
+        "selector": "td:nth-child(6)",
+        "type": "text"
+      }
+    ]
+  },
+  "meta": {
+    "model": "gemini-2.5-flash",
+    "target_id": "t1_d2b",
+    "task": "list",
+    "gen_case": "NEWS01-p1",
+    "gen_html_bytes": 63791,
+    "gen_wall_ms": 15060.3,
+    "tool_reported_usage": {
+      "prompt": 11322,
+      "completion": 2144,
+      "total": 13466
+    },
+    "generated_at": "2026-09-09 15:45:14"
+  }
+}
