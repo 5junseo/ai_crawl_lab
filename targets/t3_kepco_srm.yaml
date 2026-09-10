@@ -1,0 +1,78 @@
+id: t3_kepco_srm
+tier: T3
+name: 한국전력 SRM 공지사항
+character: >
+  ExtJS(엠로 SRM) SPA. 모든 데이터가 POST /router 하나로 오가는 Ext.Direct RPC 다.
+  진입 경로가 가장 깊다 — 메인 iframe 안의 '더보기'를 눌러야 전체 목록이 뜨고, 그리드는
+  <table> 이 아니라 ExtJS 가 만든 div 뭉치이며 id 가 세션마다 새로 발급된다.
+  시나리오 A/B(에이전트류가 사람 대신 진입 경로를 찾아내는가)의 진짜 시험대다.
+render: post_session
+encoding: utf-8
+base_url: https://srm.kepco.net
+
+# 실측 (2026-09-08, playwright chromium)
+#  - **비로그인으로 100/3919건 조회된다.** 계정·인증서 없이 진행한다.
+#    RPC 를 직접 쏘는 무단 탐침은 하지 않는다 — 브라우저로 정상 화면을 띄우고, 그때 오가는
+#    /router 응답을 가로채 meta.json 에 참조용으로만 보관한다.
+#  - mdi.do 메인의 공지 위젯(#noticeDisplayView)은 **제목이 '...' 로 잘린 티저**이고
+#    컬럼도 제목/등록일자 둘뿐이다. 목록 태스크에 쓸 수 없다.
+#  - iframe(main/splogin.jsp) 안의 a#noticeListMore 를 눌러야 전체 목록이 뜬다.
+#    이때 담합신고·피싱주의·KepcoListPopup 등 별도 창이 3~4개 같이 열린다. 닫아야 한다.
+#    (KepcoListPopup.jsp 는 이름과 달리 목록이 아니라 팝업공지 창이다. 직접 열면 빈 페이지)
+#  - 목록은 새 창이 아니라 mdi.do 본 프레임 위에 ExtJS 탭으로 그려진다.
+#  - 그리드 id(gridview-1214 등)는 **세션마다 바뀐다.** 그래서 '공지번호' 헤더를 찾아
+#    올라가는 방식으로 런타임에 셀렉터를 계산한다(row_selector_js).
+#  - 컬럼 10개: 공지번호 제목 첨부 업무구분 공고시작일 공고종료일 공동이용사 품목구분
+#              등록자 등록일자        ->  **조회수 컬럼이 없다** (views = null)
+#    첨부는 숫자(0/1/12)로 나온다 -> has_attachment 는 그 수가 0 보다 큰가로 판정한다.
+#  - 버퍼 렌더링이라 DOM 에 실제로 들어있는 행은 100건이 아니라 ~52건이다.
+#    동결된 스냅샷 안에 있는 것이 곧 정답이다. gold 는 fixture 를 보고 정한다.
+#  - 상세: 행의 제목 셀(.x-grid-cell 중 1번)을 누르면 같은 화면 위에 상세 폼이 뜬다
+#    (NoticeController.getDetail RPC). 첨부 셀(2번)을 누르면 첨부파일 창이 뜬다 - 주의.
+#    상세에도 목록 DOM 이 그대로 남는다. 도구가 상세 대신 목록을 읽어버리는지 여기서 갈린다.
+#  - 상세 필드: 공동이용사 업무구분 공지구분 품목구분 공지대상 공지시점 공지기간 제목
+#              내용 등록자 첨부파일  ->  dept / posted_at / views 없음(= null)
+fetch:
+  method: POST
+  needs_browser: true
+  freeze: rendered_dom
+
+nav:
+  entry: "https://srm.kepco.net/mdi.do"
+  list_api: "https://srm.kepco.net/router"      # Ext.Direct RPC. 응답을 참조용으로 보관
+  steps:
+    - {wait: 5000}
+    - {click: "a#noticeListMore", frame: "splogin"}   # 메인 iframe 안에 있다
+    - {wait: 7000}
+    - {close_popups: true}                            # 담합신고·피싱주의 창 정리
+    - {wait: 1500}
+  # 그리드 id 가 세션마다 바뀌므로 '공지번호' 헤더에서 거슬러 올라가 셀렉터를 만든다
+  row_selector_js: |
+    () => {
+      let h = null;
+      for (const e of document.querySelectorAll('.x-column-header-text'))
+        if (e.innerText.trim() === '공지번호') { h = e; break; }
+      if (!h) throw new Error('공지번호 헤더 없음');
+      let g = h;
+      while (g && !(g.classList && g.classList.contains('x-grid'))) g = g.parentElement;
+      const v = g && g.querySelector('.x-grid-view');
+      if (!v) throw new Error('x-grid-view 없음');
+      return '#' + v.id + ' .x-grid-item';
+    }
+  cell_selector: ".x-grid-cell"
+  row_cell: 1                     # 0=공지번호 1=제목 2=첨부(누르면 첨부창이 뜬다)
+  detail_steps:
+    - {wait: 4000}
+    - {close_popups: true}
+  wait_after_click_ms: 3000
+
+# 도구에 주는 힌트 등급(README §11). 전 도구에 동일하게 적용한다.
+hint_level: H2    # 진입 메뉴 경로까지. RPC 스펙도 그리드 셀렉터도 주지 않는다.
+
+cases:
+  list:
+    - {id: "ntc-p1"}                 # url 없음 -> nav 경로
+  detail:                            # row = 목록에서 몇 번째 행인가 (1부터)
+    - {id: "ntc-4267", row: 1}
+    - {id: "ntc-4265", row: 2}
+    - {id: "ntc-4232", row: 3}

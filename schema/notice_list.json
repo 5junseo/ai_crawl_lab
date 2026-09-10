@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "notice_list.json",
+  "title": "notice_list",
+  "description": "공지사항 목록 1페이지에서 게시글 N건을 추출하는 스키마. 도구가 '반복 구조를 찾아내는 능력'을 재는 쪽이며, 상세 추출(notice_detail)과는 별도 태스크다. gold/<target>/list.json 도 같은 형태다.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["items"],
+  "properties": {
+    "items": {
+      "type": "array",
+      "description": "목록에 보이는 게시글. 화면에 나온 순서 그대로, 상단 고정(공지) 행도 포함한다. 페이지에 없는 항목을 만들어 넣지 말 것.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "seq": {
+            "type": ["string", "null"],
+            "description": "목록의 번호 칸 값. 숫자이거나 '공지' 같은 말일 수 있어 문자열로 받는다. 칸이 없으면 null.",
+            "x_score": "str_exact"
+          },
+          "title": {
+            "type": ["string", "null"],
+            "description": "게시글 제목. 말머리 포함, 화면 표기 그대로.",
+            "x_score": "str_exact"
+          },
+          "author": {
+            "type": ["string", "null"],
+            "description": "작성자/등록자.",
+            "x_score": "str_partial"
+          },
+          "posted_at": {
+            "type": ["string", "null"],
+            "description": "작성일자/등록일자. 'YYYY-MM-DD'.",
+            "x_score": "datetime"
+          },
+          "views": {
+            "type": ["integer", "null"],
+            "description": "조회수. 콤마 제거한 정수. 칸이 없으면 null.",
+            "x_score": "number"
+          },
+          "has_attachment": {
+            "type": ["boolean", "null"],
+            "description": "첨부 아이콘 유무. 첨부 칸 자체가 없는 게시판이면 null.",
+            "x_score": "bool"
+          }
+        }
+      }
+    }
+  },
+  "x_list": {
+    "match_key": "title",
+    "fallback_key": "seq",
+    "note": "채점은 정규화한 match_key 로 gold 행과 도구 출력을 짝지은 뒤, 짝지어진 행에서만 필드별 정오를 본다. 짝을 못 찾은 gold 행은 누락(recall 하락), gold 에 없는 도구 행은 환각(precision 하락)으로 센다."
+  },
+  "x_notes": {
+    "gold_format": "gold/<target_id>/list.json = {case_id: {\"items\": [ ... ]}}",
+    "why_separate": "목록은 비LLM 도구(AutoScraper, Crawl4AI CSS)가 강한 구간이고 상세는 LLM·에이전트가 강한 구간이다. 한 점수로 합치면 그 차이가 지워진다."
+  }
+}
