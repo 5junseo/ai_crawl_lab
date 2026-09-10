@@ -1,0 +1,5 @@
+# python 3.10+. 설치 후 `crawl4ai-setup` 으로 playwright 브라우저를 받는다.
+# css / genschema / llm 세 어댑터가 이 env 를 공유한다.
+crawl4ai>=0.4
+playwright>=1.44
+litellm>=1.44

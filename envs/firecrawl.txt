@@ -1,0 +1,5 @@
+# python 3.8+. 클라우드/셀프호스팅 둘 다 측정한다.
+# 셀프호스팅 서버는 Node/Docker (firecrawl repo 의 docker-compose).
+firecrawl-py>=1.6
+requests>=2.31
+pyyaml>=6

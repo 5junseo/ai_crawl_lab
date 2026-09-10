@@ -1,0 +1,5 @@
+# harness 전용. 도구 라이브러리는 절대 넣지 않는다. python 3.11
+pyyaml>=6.0
+requests>=2.31
+playwright>=1.44        # fixtures 캡처(T2 렌더 동결)에만 사용
+litellm[proxy]>=1.44    # 비용 중앙 계측 프록시

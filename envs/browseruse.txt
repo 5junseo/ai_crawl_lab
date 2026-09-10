@@ -1,0 +1,12 @@
+# python 3.12. 브라우저 바이너리는 도구가 알아서 찾는다(시스템 Chrome).
+#
+# **버전을 못 박는다.** 0.13 대에서 API 가 크게 바뀌었다 —
+#   - playwright 를 안 쓴다(CDP 직결: cdp-use / browser-harness).
+#   - LLM 은 langchain 이 아니라 `browser_use.ChatOpenAI` 등 자체 래퍼다.
+#   - `Agent(output_model_schema=...)` 로 구조화 출력을 받는다.
+# 이 어댑터는 그 API 를 전제로 쓰였다.
+browser-use==0.13.10
+
+# harness/meter.py 가 pricing.yaml 을 읽는다. 도구가 안 쓴다고 빼면
+# 실행 끝에서 ModuleNotFoundError 로 죽는다 (firecrawl env 에서 이미 한 번 겪음).
+pyyaml>=6

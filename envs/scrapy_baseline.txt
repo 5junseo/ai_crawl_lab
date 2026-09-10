@@ -1,0 +1,6 @@
+# 대조군. 사람이 짠 셀렉터만 쓴다. 외부 라이브러리는 가져오지 않는다. python 3.11
+scrapy>=2.11
+parsel>=1.9
+beautifulsoup4>=4.12
+lxml>=5.2
+python-dateutil>=2.9

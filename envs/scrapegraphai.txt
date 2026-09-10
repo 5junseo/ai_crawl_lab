@@ -1,0 +1,25 @@
+# python 3.11.
+#
+# **버전을 전부 못 박았다. `pip install scrapegraphai` 는 2026-09-09 현재 설치해도 import 가
+# 안 된다.** 도구가 `langchain_community.chat_models.ChatOllama` 를 import 하는데
+# 그 심볼은 langchain-community 0.4 에서 없어졌고, 0.3.x 는 langchain-core<1.0 을 요구한다.
+# 그런데 scrapegraphai 1.68~1.76 은 `langchain>=1.2.0`(= core 1.x) 과 `langchain-community>=0.3.31`
+# 을 **동시에** 요구한다 — 선언 자체가 서로 모순이라 어떤 조합으로도 만족시킬 수 없다.
+#
+#   1.76.0 + community 0.4.2  -> ImportError: cannot import name 'ChatOllama'
+#   1.76.0 + community 0.3.31 -> ModuleNotFoundError: langchain_core.tracers.langchain_v1
+#   1.65~1.67                 -> init_chat_model 을 langchain_core 에서 찾는다(core 1.x 필요)
+#   1.64.1~1.64.2             -> 위와 같음
+#
+# **1.64.0 이 "선언한 의존성을 실제로 만족시킬 수 있는 마지막 릴리스"다.** 이걸 쓴다.
+# (선언 langchain>=0.3.0 / langchain-community>=0.2.9 — 아래 0.3 계열로 전부 충족된다)
+scrapegraphai==1.64.0
+langchain<1
+langchain-core<1
+langchain-community<0.4
+langchain-openai<1
+langchain-aws<1
+langchain-mistralai<1
+langchain-ollama<1
+playwright>=1.44
+# playwright install chromium 을 따로 실행해야 한다 (FetchNode -> ChromiumLoader).
