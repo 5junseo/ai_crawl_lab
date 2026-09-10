@@ -1,0 +1,23 @@
+# 실제 발주 데이터 / 키 — 절대 커밋 금지
+fixtures/
+gold/
+results/
+.env
+*.env
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# tooling
+.idea/
+.pytest_cache/
+*.log
+logs/
+
+# 윈도우 잡동사니
+*.stackdump
+Thumbs.db
+desktop.ini
